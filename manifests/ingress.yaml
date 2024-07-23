@@ -1,0 +1,23 @@
+#sudo minikube tunnel — macOs
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: minimal-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: arch.homework
+    http:
+      paths:
+      - path: /otusapp(.*)/(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: otus-service
+            port: 
+              number: 80
